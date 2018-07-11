@@ -8,9 +8,12 @@ use App\Post;
 
 class BlogController extends Controller
 {
+    protected $limit = 3;
+
     public function index(){
 
-        $posts = Post::all();
+        $posts = Post::with('author')->orderBy('created_at', 'desc')->simplepaginate($this->limit);
         return view("blog.index", compact('posts'));
+
     }
 }
